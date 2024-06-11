@@ -49,27 +49,38 @@ public class OsobaController {
     }
 
     @GetMapping("/prijmeni")
-    public ModelAndView prijmeni(@ModelAttribute("prijmeni") @Valid @NotBlank String prijmeni, @PageableDefault() Pageable pageable) {
+    public ModelAndView prijmeni(@ModelAttribute("prijmeni") @Valid @NotBlank String prijmeni, @PageableDefault(sort = {"prijmeni", "jmeno"}) Pageable pageable) {
         return new ModelAndView("osoby")
                 .addObject("formInclude", "prijmeni.ftlh")
-                //TODO vytvořit a použít správnou metodu pro načtení dat
-                .addObject("osoby", service.seznamOsob(pageable));
+                .addObject("osoby", service.seznamDleZacatkuPrijmeni(prijmeni, pageable));
+    }
+
+    @GetMapping("/jmeno")
+    public ModelAndView jmeno(@ModelAttribute("jmeno") @Valid @NotBlank String jmeno, @PageableDefault(sort = {"jmeno", "prijmeni"}) Pageable pageable) {
+        return new ModelAndView("osoby")
+                .addObject("formInclude", "krestni-jmeno.ftlh")
+                .addObject("osoby", service.seznamDleZacatkuKrestnihoJmena(jmeno, pageable));
     }
 
     @GetMapping("/obec")
     public ModelAndView obec(@ModelAttribute("obec") @Valid @NotBlank String obec, @PageableDefault(sort = {"prijmeni", "jmeno"}) Pageable pageable) {
         return new ModelAndView("osoby-s-adresou")
                 .addObject("formInclude", "obec.ftlh")
-                //TODO vytvořit a použít správnou metodu pro načtení dat
-                .addObject("osoby", service.seznamOsob(pageable));
+                .addObject("osoby", service.seznamDleObce(obec, pageable));
     }
 
     @GetMapping("/minimalni-vek")
     public ModelAndView minimalniVek(@ModelAttribute("vek") int vek, @PageableDefault(sort = {"prijmeni", "jmeno"}) Pageable pageable) {
         return new ModelAndView("osoby")
                 .addObject("formInclude", "minimalni-vek.ftlh")
-                //TODO vytvořit a použít správnou metodu pro načtení dat
-                .addObject("osoby", service.seznamOsob(pageable));
+                .addObject("osoby", service.seznamDleVeku(vek, pageable));
+    }
+
+    @GetMapping("/prijmeni-a-jmeno")
+    public ModelAndView jmenoAPrijmeni(@ModelAttribute("prijmeni") String zacatekPrijmeni, @ModelAttribute("jmeno") String zacatekJmena, @PageableDefault(sort = {"prijmeni", "jmeno"}) Pageable pageable) {
+        return new ModelAndView("osoby")
+                .addObject("formInclude", "prijmeni-a-jmeno.ftlh")
+                .addObject("osoby", service.seznamDlePrijmeniAJmena(zacatekPrijmeni, zacatekJmena, pageable));
     }
 
     @ModelAttribute("currentYear")

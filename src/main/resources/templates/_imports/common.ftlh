@@ -23,7 +23,9 @@
 
 [#macro totalCount]
     <div class="totalCount">
-        [#if osoby.totalElements == 1]
+        [#if osoby.totalElements == 0]
+            Celkem nalezeno <strong>${osoby.totalElements}</strong> záznamů.
+        [#elseif osoby.totalElements == 1]
             Celkem nalezen <strong>${osoby.totalElements}</strong> záznam.
         [#elseif osoby.totalElements <= 4]
             Celkem nalezeny <strong>${osoby.totalElements}</strong> záznamy.
@@ -31,7 +33,6 @@
             Celkem nalezeno <strong>${osoby.totalElements}</strong> záznamů.
         [/#if]
     </div>
-
 [/#macro]
 
 [#macro pager]

@@ -41,8 +41,19 @@ public interface OsobaRepository extends JpaRepository<Osoba, Long> {
     Page<Osoba> findByPrijmeniStartingWithIgnoreCase(String prijmeni, Pageable pageable);
 
     /**
+     * Vyhledá všechny osoby, jejichž křestní jméno začíná na uvedený text.
+     */
+    Page<Osoba> findByJmenoStartingWithIgnoreCase(String jmeno, Pageable pageable);
+
+    /**
      * Vyhledá všechny osoby, které se narodily v rozmezí zadaných let.
      */
     @Query("SELECT o FROM Osoba o WHERE YEAR(o.datumNarozeni) BETWEEN :pocatecniRok AND :koncovyRok")
     Page<Osoba> findByRok(@Param("pocatecniRok") int pocatecniRok, @Param("koncovyRok") int koncovyRok, Pageable pageable);
+
+    /**
+     * Vyhledá všechny osoby, jejichž příjmení začíná na uvedený text a křestní jméno začíná na uvedený druhý text.
+     */
+    @Query("SELECT o FROM Osoba o WHERE o.prijmeni LIKE ?1% AND o.jmeno LIKE ?2%")
+    Page<Osoba> findByPrijmeniAJmeno(String prijmeni, String jmeno, Pageable pageable);
 }

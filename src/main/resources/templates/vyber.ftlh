@@ -19,6 +19,16 @@
     </section>
 
     <section>
+        <h4>Podle křestního jména</h4>
+        [#include "/_forms/krestni-jmeno.ftlh"]
+    </section>
+
+    <section>
+        <h4>Podle příjmení a křestního jména</h4>
+        [#include "/_forms/prijmeni-a-jmeno.ftlh"]
+    </section>
+
+    <section>
         <h4>Podle obce</h4>
         [#include "/_forms/obec.ftlh"]
     </section>
